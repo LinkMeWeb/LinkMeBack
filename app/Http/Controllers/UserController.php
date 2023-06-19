@@ -53,8 +53,14 @@ class UserController extends Controller
     public function show(string $id)
     {
         $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+
         $photos = Photo::where('user_id', $id)->get();
-        $user->photos = $photos;
+        $user->setRelation('photos', $photos);
+
         return $user;
     }
 
@@ -186,6 +192,11 @@ class UserController extends Controller
         $followUser = User::findOrFail($id);
 
         return $user->follows()->where('follower_id', $followUser->id)->exists();
+    }
+
+    function getLikedPhotos() {
+        $user = User::find(auth()->user()->id);
+        return $user->likes()->orderBy('created_at', 'desc')->get();
     }
 
 }
