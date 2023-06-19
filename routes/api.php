@@ -55,6 +55,7 @@ Route::group(['middleware' => ["auth:sanctum"]], function () {
     Route::get('/user/get-user/{nickname}',[\App\Http\Controllers\UserController::class, 'findByName']);
     Route::get('/user/like/{id}', [\App\Http\Controllers\PhotoController::class, 'likeRequest']);
     Route::get('/user/liked/{id}', [\App\Http\Controllers\PhotoController::class, 'liked']);
+    Route::get('/user/photos/likedPhotos', [\App\Http\Controllers\UserController::class, 'getLikedPhotos']);
     Route::get('/user/images/{id}', [\App\Http\Controllers\UserController::class, 'getUserImages']);
     Route::post('/user/follow', [\App\Http\Controllers\UserController::class, 'follow']);
     Route::get('/user/follows/{id}', [\App\Http\Controllers\UserController::class, 'getFollows']);
